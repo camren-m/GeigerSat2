@@ -6,7 +6,7 @@
 #pragma once
 
 // Includes
-#include <RadiationWatch.h>
+#include "RadiationWatch.h"
 #include "include/LoggingManager.h"
 
 namespace GeigerManager {

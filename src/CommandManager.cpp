@@ -5,8 +5,8 @@
 **/
 
 // Includes
-#include <StaticSerialCommands.h>
-#include <EEPROM.h>
+#include "StaticSerialCommands.h"
+#include "EEPROM.h"
 #include "include/LoggingManager.h"
 #include "include/EEPROMAddresses.h"
 #include "include/AltimeterManager.h"
