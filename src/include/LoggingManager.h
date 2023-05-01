@@ -6,7 +6,7 @@
 #pragma once
 
 // Includes
-#include "SD.h"
+#include <SD.h>
 
 namespace LoggingManager {
     void Log(arduino::String Message);

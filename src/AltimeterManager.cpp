@@ -6,7 +6,7 @@
 #pragma once
 
 // Includes
-#include "EEPROM.h"
+#include <EEPROM.h>
 #include "include/EEPROMAddresses.h"
 #include "include/LoggingManager.h"
 
