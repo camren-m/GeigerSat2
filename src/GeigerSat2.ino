@@ -5,10 +5,10 @@
 **/
 
 // Includes
-#include "Modules/LoggingManager.h"
-#include "Modules/CommandManager.h"
-#include "Modules/AltimeterManager.h"
-#include "Modules/GeigerManager.h"
+#include "include/LoggingManager.h"
+#include "include/CommandManager.h"
+#include "include/AltimeterManager.h"
+#include "include/GeigerManager.h"
 
 namespace GeigerSat2 {
     bool Initialized = false;
