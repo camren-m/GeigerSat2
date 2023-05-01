@@ -7,8 +7,8 @@
 
 // Includes
 #include "EEPROM.h"
-#include "include/EEPROMAddresses.h"
-#include "include/LoggingManager.h"
+#include "EEPROMAddresses.h"
+#include "LoggingManager.h"
 
 namespace AltimeterManager {
     double BarometerCalibration = 1013.25;

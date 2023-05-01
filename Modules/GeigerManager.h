@@ -7,7 +7,6 @@
 
 // Includes
 #include "RadiationWatch.h"
-#include "include/LoggingManager.h"
 
 namespace GeigerManager {
     RadiationWatch ControlGeiger(2,3);

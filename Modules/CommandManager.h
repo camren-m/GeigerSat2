@@ -6,11 +6,10 @@
 
 // Includes
 #include "StaticSerialCommands.h"
+#include "EEPROMAddresses.h"
+#include "AltimeterManager.h"
+#include "ResetManager.h"
 #include "EEPROM.h"
-#include "include/LoggingManager.h"
-#include "include/EEPROMAddresses.h"
-#include "include/AltimeterManager.h"
-#include "include/ResetManager.h"
 
 namespace CommandManager {
     // Help command
