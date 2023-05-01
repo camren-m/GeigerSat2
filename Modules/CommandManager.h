@@ -8,6 +8,7 @@
 #include "StaticSerialCommands.h"
 #include "EEPROMAddresses.h"
 #include "AltimeterManager.h"
+#include "ResetManager.h"
 #include "EEPROM.h"
 
 namespace CommandManager {
@@ -17,33 +18,47 @@ namespace CommandManager {
     }
 
     // Proceed command
-    bool ProceedListener = false;
-    bool ProceedTrigger = false;
+    bool InitializeCommandRun = false;
 
-    void Proceed(SerialCommands& Sender, Args& _) {
-        if(!ProceedListener) return;
-
-        ProceedTrigger = true;
+    void Initialize(SerialCommands& Sender, Args& _) {
+        InitializeCommandRun = true;
     }
 
-    void AwaitProceedCommand() {
-        ProceedListener = true;
-        while(!ProceedTrigger) { }
-        ProceedListener = false;
-    }
-
-    // Barometer command
+    // Barometer update command
     void SetBarometer(SerialCommands& Sender, Args& Arguments) {
-        double NewBarometerSetting = Arguments[0].getFloat();
+        double NewBarometerSettinginHg = Arguments[0].getFloat();
+        double hPaConversion = NewBarometerSettinginHg * 33.8639;
 
-        EEPROM.put(EEPROMAddress::BarometerCalibration, NewBarometerSetting);
-        AltimeterManager::BarometerCalibration = NewBarometerSetting;
+        EEPROM.put(EEPROMAddress::BarometerCalibration, hPaConversion);
+        AltimeterManager::BarometerCalibration = hPaConversion;
+        LoggingManager::Log("Updated barometer calibration and EEPROM record via to "+arduino::String(hPaConversion)+" hPa/"+arduino::String(NewBarometerSettinginHg)+" inHg via the baro-set command.");
+    }
+
+    // Barometer get command
+    void GetBarometer(SerialCommands& Sender, Args& _) {
+        Serial.println(AltimeterManager::BarometerCalibration);
+    }
+
+    // Erase EEPROM command
+    void EraseEEPROM(SerialCommands& Sender, Args& _) {
+        LoggingManager::Log("Erasing EEPROM...");
+        for (int i = 0; i < EEPROM.length(); i++) {
+            EEPROM.write(i, 0);
+        }
+        LoggingManager::Log("EEPROM erased.");
+    }
+
+    // Reset command
+    void Reset(SerialCommands& Sender, Args& _) {
+        ResetManager::Reset();
     }
 
     Command Commands[] {
         COMMAND(Help, "help"),
-        COMMAND(Proceed, "proceed", nullptr, "Proceeds with initialization"),
-        COMMAND(SetBarometer, "barometer", ArgType::Float, nullptr, "Sets the barometer calibration")
+        COMMAND(Initialize, "init", nullptr, "Proceeds with GeigerSat2 initialization."),
+        COMMAND(SetBarometer, "baro-set", ArgType::Float, nullptr, "Sets the barometer calibration in inHg."),
+        COMMAND(GetBarometer, "baro-status", nullptr, "Fetches the current barometer status."),
+        COMMAND(EraseEEPROM, "erase-eeprom", nullptr, "Erases all values stored in the EEPROM.")
     };
     SerialCommands CommandDaemon(Serial, Commands, sizeof(Commands) / sizeof(Command));
 
