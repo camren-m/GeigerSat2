@@ -1,20 +1,23 @@
 /**
-  GeigerSat2.ino
+  main.cpp
   4/28/2023
   © Camren Mumme 2023
 **/
 
+// Preprocessor Directives
+#define LIBCALL_RADIATIONWATCH // prevents multiple definition of RadiationWatch::setupInterrupt()
+
 // Includes
-#include "Modules/LoggingManager.h"
-#include "Modules/CommandManager.h"
-#include "Modules/AltimeterManager.h"
-#include "Modules/GeigerManager.h"
+#include "LoggingManager.h"
+#include "CommandManager.h"
+#include "AltimeterManager.h"
+#include "GeigerManager.h"
 
 namespace GeigerSat2 {
     bool Initialized = false;
 
     void Initialize() {
-        Serial.println("Proceeding with initialization.");
+        Serial.println(F("Proceeding with initialization."));
         LoggingManager::Start();
         LoggingManager::Log("Hello! Starting our tests and subsystem initializations now.");
         AltimeterManager::Start();
@@ -31,8 +34,8 @@ void setup() {
     Serial.begin(9600);
     while(!Serial) { }
 
-    Serial.println("GeigerSat2 ready for initialization. Send init command to initialize.");
-    Serial.println("------------------------------------------------------------------------");
+    Serial.println(F("GeigerSat2 ready for initialization. Send init command to initialize."));
+    Serial.println(F("------------------------------------------------------------------------"));
 }
 
 void loop() {

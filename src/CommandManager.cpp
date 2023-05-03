@@ -1,15 +1,18 @@
 /**
-  CommandManager.h
+  CommandManager.cpp
   4/28/2023
   © Camren Mumme 2023
 **/
 
 // Includes
-#include "StaticSerialCommands.h"
+#include <EEPROM.h>
+#include <StaticSerialCommands.h>
+#include <MemoryFree.h>
 #include "EEPROMAddresses.h"
 #include "AltimeterManager.h"
+#include "LoggingManager.h"
 #include "ResetManager.h"
-#include "EEPROM.h"
+#include "CommandManager.h"
 
 namespace CommandManager {
     // Help command
@@ -17,10 +20,8 @@ namespace CommandManager {
         Sender.listCommands();
     }
 
-    // Proceed command
-    bool InitializeCommandRun = false;
-
     void Initialize(SerialCommands& Sender, Args& _) {
+        Serial.println("it is alive");
         InitializeCommandRun = true;
     }
 
@@ -48,19 +49,27 @@ namespace CommandManager {
         LoggingManager::Log("EEPROM erased.");
     }
 
+    // Read EEPROM command
+    void ReadEEPROM(SerialCommands& _, Args& __) {
+        LoggingManager::Log("Reading entire EEPROM...");
+        LoggingManager::Log("EEPROM size: "+String(EEPROM.length())+" bytes");
+
+        for (int i = 0; i < EEPROM.length(); i++) {
+            Serial.print(EEPROM.read(i));
+        }
+        Serial.print("\n");
+
+        LoggingManager::Log("Read entire EEPROM.");
+    }
+
     // Reset command
     void Reset(SerialCommands& Sender, Args& _) {
         ResetManager::Reset();
     }
 
-    Command Commands[] {
-        COMMAND(Help, "help"),
-        COMMAND(Initialize, "init", nullptr, "Proceeds with GeigerSat2 initialization."),
-        COMMAND(SetBarometer, "baro-set", ArgType::Float, nullptr, "Sets the barometer calibration in inHg."),
-        COMMAND(GetBarometer, "baro-status", nullptr, "Fetches the current barometer status."),
-        COMMAND(EraseEEPROM, "erase-eeprom", nullptr, "Erases all values stored in the EEPROM.")
-    };
-    SerialCommands CommandDaemon(Serial, Commands, sizeof(Commands) / sizeof(Command));
+    void GetMemory(SerialCommands& _, Args& __) {
+        Serial.println(FreeRam());
+    }
 
     void Update() {
         CommandDaemon.readSerial();
