@@ -21,7 +21,6 @@ namespace CommandManager {
     }
 
     void Initialize(SerialCommands& Sender, Args& _) {
-        Serial.println("it is alive");
         InitializeCommandRun = true;
     }
 
