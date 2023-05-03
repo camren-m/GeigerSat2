@@ -33,6 +33,5 @@ namespace CommandManager {
     };
     static SerialCommands CommandDaemon(Serial, Commands, sizeof(Commands) / sizeof(Command));
 
-
     void Update();
 }
