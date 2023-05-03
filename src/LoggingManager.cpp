@@ -35,7 +35,9 @@ namespace LoggingManager {
         if (BufferSize >= ChunkSize && BufferSize > 0) {
             digitalWrite(LED_BUILTIN, HIGH);
             if (!CurrentFile.write(this->Buffer.c_str(), ChunkSize)) {
-                Serial.println(F("failed to write buffer. sd card may have been dislodged, removed, or corrupted"));
+                Serial.println(F("Possibly FATAL: Failed to write buffer. SD card may have been dislodged, removed, or corrupted. We will not wipe the buffer, but this may cause memory issues if this error reoccurs."));
+                digitalWrite(LED_BUILTIN, LOW);
+                return;
             }
             digitalWrite(LED_BUILTIN, LOW);
             this->Buffer.remove(0, ChunkSize);
