@@ -21,8 +21,6 @@ namespace CommandManager {
     void GetMemory(SerialCommands& _, Args& __);
     void ReadEEPROM(SerialCommands& _, Args& __);
 
-    String convert_to_hex_str(int decimal);
-
     static Command Commands[] {
         COMMAND(Help, "help"),
         COMMAND(Initialize, "init", nullptr, "Proceeds with GeigerSat2 initialization."),
