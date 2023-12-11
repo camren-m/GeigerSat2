@@ -5,8 +5,7 @@ Hardware plans, manufacturing details, source code, and FreeCAD documents relati
 ![Picture of the finished CubeSat](https://github.com/cmumme/GeigerSat2/assets/61283706/24af0c9d-7978-410f-9d94-899d2b5a57df)
 
 ## Tech stack
-At the heart of the CubeSat, we have an Arduino Nano Every running on the Arduino framework, with the firmware code found in ``Legacy.cpp``.
-(there is a second, less stable, memory intensize, but more organized firmware in src/ you can reference to get a better idea of the system)
+At the heart of the CubeSat, we have an Arduino Nano Every running on the Arduino framework, with the firmware code found in ``src/main.cpp``. (the version found on this repo is not the final flight firmware, pending update)
 
 The Arduino Nano Every interacts with an Adafruit ``BMP388``, an Adafruit microSD card module, buzzer, and up to 3 RadiationWatch Type 5
 solid state geiger counters. All components (excluding the geiger counters) are soldered to the custom PCB for simplicity, reliability,
