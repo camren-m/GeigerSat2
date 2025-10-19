@@ -1,7 +1,7 @@
 /**
   pitches.h
   6/9/2023
-  © Camren Mumme 2023
+  © Camren M 2023
 **/
 
 #pragma once
