@@ -1,7 +1,7 @@
 /**
   GeigerSat2.ino
   4/11/2023
-  © Camren Mumme 2023
+  © Camren M 2023
 **/
 /*
 // Preprocessor Macros
@@ -143,7 +143,7 @@ void setup() {
 
   Log("Welcome! GeigerSat2 initialized.");
   Log("Copyright (c) 2023");
-  Log("   Camren Mumme. All Rights Reserved");
+  Log("   Camren M. All Rights Reserved");
 }
 
 void loop() {
